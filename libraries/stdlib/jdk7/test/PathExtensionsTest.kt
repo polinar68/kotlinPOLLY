@@ -5,14 +5,13 @@
 
 package kotlin.jdk7.test
 
-import java.io.File
 import java.io.IOException
 import java.nio.file.*
 import kotlin.test.*
 
 class PathExtensionsTest {
     private val isCaseInsensitiveFileSystem = Paths.get("C:/") == Paths.get("c:/")
-    private val isBackslashSeparator = File.separatorChar == '\\'
+    private val isBackslashSeparator = FileSystems.getDefault().separator == "\\"
 
     @Test
     fun extension() {
