@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2018 JetBrains s.r.o. and Kotlin Programming Language contributors.
+ * Copyright 2010-2020 JetBrains s.r.o. and Kotlin Programming Language contributors.
  * Use of this source code is governed by the Apache 2.0 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -8,9 +8,7 @@ package kotlin.jdk7.test
 import java.nio.file.Files
 import java.nio.file.StandardOpenOption
 import java.util.*
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class PathReadWriteTest {
     @Test
@@ -18,7 +16,7 @@ class PathReadWriteTest {
         val file = Files.createTempFile(null, null)
         file.writeText("Hello\n")
         file.appendText("World\n")
-        file.appendText("Again")
+        file.writeText("Again", Charsets.US_ASCII, StandardOpenOption.APPEND)
 
         assertEquals("Hello\nWorld\nAgain", file.readText())
         assertEquals(listOf("Hello", "World", "Again"), file.readLines(Charsets.UTF_8))
@@ -39,17 +37,17 @@ class PathReadWriteTest {
         file.forEachLine(charset = Charsets.UTF_8, options = arrayOf(StandardOpenOption.READ)) {
             list.add(it)
         }
-        assertEquals(arrayListOf("Hello", "World"), list)
+        assertEquals(listOf("Hello", "World"), list)
 
-        assertEquals(arrayListOf("Hello", "World"), file.readLines())
+        assertEquals(listOf("Hello", "World"), file.readLines())
 
         file.useLines {
-            assertEquals(arrayListOf("Hello", "World"), it.toList())
+            assertEquals(listOf("Hello", "World"), it.toList())
         }
 
         val text = file.inputStream().reader().readText()
-        assertTrue(text.contains("Hello"))
-        assertTrue(text.contains("World"))
+        assertTrue("Hello" in text)
+        assertTrue("World" in text)
 
         file.writeText("")
         var c = 0
