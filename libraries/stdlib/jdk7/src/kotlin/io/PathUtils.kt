@@ -55,7 +55,11 @@ public val Path.nameWithoutExtension: String
  */
 @SinceKotlin("1.4")
 @ExperimentalStdlibApi
-public fun Path.relativeTo(base: Path): Path = base.relativize(this)
+public fun Path.relativeTo(base: Path): Path = try {
+    base.relativize(this)
+} catch (e: IllegalArgumentException) {
+    throw java.lang.IllegalArgumentException(e.message + "\nthis path: $this\nbase path: $base", e)
+}
 
 /**
  * Calculates the relative path for this path from a [base] path.

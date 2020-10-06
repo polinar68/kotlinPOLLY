@@ -309,7 +309,9 @@ class PathExtensionsTest {
 
         fun assertFailsRelativeTo(file: Path, base: Path) {
             val e = assertFailsWith<IllegalArgumentException>("file: $file, base: $base") { file.relativeTo(base) }
-            assertNotNull(e.message)
+            val message = assertNotNull(e.message)
+            assertTrue(file.toString() in message, message)
+            assertTrue(base.toString() in message, message)
         }
 
         val allFiles = listOf(absolute, relative) + if (isBackslashSeparator) listOf(networkShare1, networkShare2) else emptyList()
