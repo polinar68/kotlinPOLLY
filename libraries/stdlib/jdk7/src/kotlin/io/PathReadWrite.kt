@@ -200,7 +200,7 @@ public inline fun Path.inputStream(vararg options: OpenOption): InputStream {
  * The [options] parameter determines how the file is opened. If no options are present then it is
  * equivalent to opening the file with the [CREATE][StandardOpenOption.CREATE],
  * [TRUNCATE_EXISTING][StandardOpenOption.TRUNCATE_EXISTING], and [WRITE][StandardOpenOption.WRITE]
- * option.
+ * options.
  */
 @SinceKotlin("1.4")
 @ExperimentalStdlibApi
