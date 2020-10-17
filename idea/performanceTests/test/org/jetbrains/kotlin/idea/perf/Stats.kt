@@ -397,7 +397,7 @@ class Stats(
         fun Metric.ifHasError(): Boolean {
             if (hasError) return true
 
-            return this.children.any { ifHasError() }
+            return this.children.any { it.ifHasError() }
         }
         if (metric.ifHasError()) {
             logMessage { "writeJson: $metric" }
